@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Reply;
 
 
 class Question extends Model
@@ -26,4 +27,16 @@ class Question extends Model
     {
         return $this->belongsTO(Category::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
+
+    public function getPathAttribute()
+    {
+        return asset("api/questions/$this->slug");
+    }
+
+    protected $guarded = [];
 }

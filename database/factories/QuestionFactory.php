@@ -4,6 +4,10 @@ namespace Database\Factories;
 
 use App\Models\Question;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
+use App\Models\Reply;
+use App\Models\Category;
+use Illuminate\Support\Str;
 
 class QuestionFactory extends Factory
 {
@@ -21,8 +25,21 @@ class QuestionFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence;
         return [
-            //
+            'title'       => $title,
+            'slug'        => Str::slug($title),
+            'body'        => $this->faker->text,
+
+            'category_id' => function()
+            {
+                return Category::all()->random();
+            },
+
+            'user_id'     => function()
+            {
+                return  User::all()->random();
+            }
         ];
     }
 }
