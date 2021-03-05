@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('JWT', ['except' => ['login','signUp']]);
     }
-
+ 
     /**
      * Get a JWT via given credentials.
      *
@@ -35,6 +35,18 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(auth()->user());
+    }
+
+    public function signUp(Request $request)
+    {
+        
+        /*User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => bcrypt($request->password),
+        ]);*/
+        User::create($request->all());
+        return response()->json(['message'=>'User created successfully']);
     }
 
     /**

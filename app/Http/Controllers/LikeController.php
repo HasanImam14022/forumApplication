@@ -8,8 +8,14 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('JWT');
+    }
     public function likeIt(Reply $reply)
     {
+    
        $reply->like()->create([
            //'user_id'  => auth()->id()
            'user_id'  => '1'
